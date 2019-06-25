@@ -1,10 +1,16 @@
 <template>
-  <a href="#" class="start">Start</a>
+  <button type="button" @click="startTimer()" :disabled="this.$store.state.isTimerOn" class="start">
+    Start
+  </button>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    startTimer() {
+      this.$store.commit('start')
+    }
+  }
 }
 </script>
 

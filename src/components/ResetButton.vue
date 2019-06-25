@@ -1,12 +1,16 @@
 <template>
-  <a href="#" class="reset">
+  <a href="#" @click="resetTimer()" class="reset">
     <span>Reset</span>
   </a>
 </template>
 
 <script>
 export default {
-  
+  methods: {
+    resetTimer() {
+      this.$store.commit('reset')
+    }
+  }
 }
 </script>
 
