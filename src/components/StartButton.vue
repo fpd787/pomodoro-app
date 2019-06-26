@@ -1,11 +1,21 @@
 <template>
-  <button type="button" @click="startTimer()" :disabled="this.$store.state.isTimerOn" class="start">
+  <button
+    type="button"
+    @click="startTimer()"
+    :disabled="isTimerOn"
+    :class="[{ active: isTimerOn }, 'start']"
+  >
     Start
   </button>
 </template>
 
 <script>
 export default {
+  computed: {
+    isTimerOn() {
+      return this.$store.state.isTimerOn
+    }
+  },
   methods: {
     startTimer() {
       this.$store.commit('start')
@@ -15,20 +25,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$main-color: #8bc34a;
+$sub-color: #fff;
+
 .start {
   display: inline-block;
-  padding: 0.5em 1em;
+  width: 160px;
+  padding: 0.8em;
+  text-align: center;
   text-decoration: none;
-  background: #668ad8;
-  color: #fff;
-  border-bottom: solid 4px #627295;
+  background-color: $main-color;
+  color: $sub-color;
+  border: solid 2px $main-color;
   border-radius: 3px;
-
-  &:active {
-    -webkit-transform: translateY(.4s);
-    transform: translateY(.4s);
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
-    border-bottom: none;
-  }
+  transition: .4s;
+}
+.active {
+  background-color: $sub-color;
+  color: $main-color;
 }
 </style>

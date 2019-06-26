@@ -1,5 +1,5 @@
 <template>
-  <p>{{ count }}</p>
+  <p class="timer">{{ count }}</p>
 </template>
 
 <script>
@@ -19,3 +19,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.timer {
+  font-size: 4em;
+}
+</style>

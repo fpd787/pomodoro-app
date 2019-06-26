@@ -1,11 +1,21 @@
 <template>
-  <button type="button" @click="pauseTimer()" :disabled="!this.$store.state.isTimerOn" class="pause">
+  <button
+    type="button"
+    @click="pauseTimer()"
+    :disabled="!isTimerOn"
+    :class="[{ active: !isTimerOn }, 'pause']"
+  >
     Pause
   </button>
 </template>
 
 <script>
 export default {
+  computed: {
+    isTimerOn() {
+      return this.$store.state.isTimerOn
+    }
+  },
   methods: {
     pauseTimer() {
       this.$store.commit('pause')
@@ -15,18 +25,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$main-color: #ff9800;
+$sub-color: #fff;
+
 .pause {
   display: inline-block;
-  padding: 0.5em 1em;
+  width: 160px;
+  padding: 0.8em;
+  text-align: center;
   text-decoration: none;
-  color: #67c5ff;
-  border: solid 2px #67c5ff;
+  background-color: $main-color;
+  color: $sub-color;
+  border: solid 2px $main-color;
   border-radius: 3px;
   transition: .4s;
-
-  &:hover {
-    background: #67c5ff;
-    color: white;
-  }
+}
+.active {
+  background-color: $sub-color;
+  color: $main-color;
 }
 </style>

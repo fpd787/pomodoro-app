@@ -1,7 +1,11 @@
 <template>
-  <a href="#" @click="resetTimer()" class="reset">
-    <span>Reset</span>
-  </a>
+  <button
+    type="button"
+    @click="resetTimer()"
+    class="reset"
+  >
+    Reset
+  </button>
 </template>
 
 <script>
@@ -15,23 +19,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$main-color: #ec407a;
+$sub-color: #fff;
+
 .reset {
   display: inline-block;
-  font-weight: bold;
-  padding: 0.5em 1em;
+  width: 160px;
+  padding: 0.8em;
+  text-align: center;
   text-decoration: none;
-  color: #fff;
-  background: #ff7f7f;
+  background-color: $main-color;
+  color: $sub-color;
+  border: solid 2px $main-color;
   border-radius: 3px;
   transition: .4s;
-
-  > span {
-    border-bottom: solid 2px #fff;
-    border-top: solid 2px #fff;
-  }
-
-  &:hover > span {
-    padding: 0.1em 0;
-  }
 }
 </style>
