@@ -1,5 +1,6 @@
 <template>
   <div class="form">
+    <Tabs></Tabs>
     <CountDown></CountDown>
     <ul class="button-list">
       <li><StartButton></StartButton></li>
@@ -10,12 +11,14 @@
 </template>
 
 <script>
+import Tabs from './Tabs.vue'
 import CountDown from './CountDown.vue'
 import StartButton from './StartButton.vue'
 import PauseButton from './PauseButton.vue'
 import ResetButton from './ResetButton.vue'
 export default {
   components: {
+    Tabs,
     CountDown,
     StartButton,
     PauseButton,
@@ -25,6 +28,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ul {
+  padding-inline-start: 0;
+}
 .form {
   background-color: #eef2f6;
   border-radius: 15px;
@@ -34,14 +40,11 @@ export default {
   left: 50%;
   transform: translateX(-50%) translateY(-10%);
 }
-.button-list {
-  padding-inline-start: 0;
-  > li {
-    display: inline-block;
-    margin: 0 12px 0 0;
-    &:last-child {
-      margin: 0;
-    }
+.button-list > li {
+  display: inline-block;
+  margin: 0 12px 0 0;
+  &:last-child {
+    margin: 0;
   }
 }
 </style>
