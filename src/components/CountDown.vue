@@ -11,7 +11,7 @@ export default {
   },
   watch: {
     count() {
-      if (this.$store.state.count < 0) {
+      if (this.$store.state.counter < 0) {
         this.$store.commit('reset')
         alert('Work is done!')
       }
