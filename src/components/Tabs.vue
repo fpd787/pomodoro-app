@@ -1,12 +1,12 @@
 <template>
   <div class="tabs">
-    <input type="radio" value="1" id="pomodoroTab" v-model="activeTabId" class="tab-input">
+    <input type="radio" name="tabs" @change="changeTab('pomodoro', 1500)" value="pomodoro" id="pomodoroTab" class="tab-input">
     <label for="pomodoroTab" :class="classPomodoro">Pomodoro</label>
 
-    <input type="radio" value="2" id="shortBreakTab" v-model="activeTabId" class="tab-input" :disabled="true">
+    <input type="radio" name="tabs" @change="changeTab('shortBreak', 300)" value="shortBreak" id="shortBreakTab" class="tab-input">
     <label for="shortBreakTab" :class="classShortBreak">Short Break</label>
 
-    <input type="radio" value="3" id="longBreakTab" v-model="activeTabId" class="tab-input" :disabled="true">
+    <input type="radio" name="tabs" @change="changeTab('longBreak', 900)" value="longBreak" id="longBreakTab" class="tab-input">
     <label for="longBreakTab" :class="classLongBreak">Long Break</label>
 
     <div class="bottom-line"></div>
@@ -15,32 +15,36 @@
 
 <script>
 export default {
-  data() {
-    return {
-      activeTabId: '1'
-    }
-  },
   computed: {
+    activeTab() {
+      return this.$store.getters.activeTab
+    },
     classPomodoro() {
       return {
-        'tab-active': this.activeTabId === '1',
-        'tab-not-active': this.activeTabId !== '1',
+        'tab-active': this.activeTab === 'pomodoro',
+        'tab-not-active': this.activeTab !== 'pomodoro',
         'tab-label': true
       }
     },
     classShortBreak() {
       return {
-        'tab-active': this.activeTabId === '2',
-        'tab-not-active': this.activeTabId !== '2',
+        'tab-active': this.activeTab === 'shortBreak',
+        'tab-not-active': this.activeTab !== 'shortBreak',
         'tab-label': true
       }
     },
     classLongBreak() {
       return {
-        'tab-active': this.activeTabId === '3',
-        'tab-not-active': this.activeTabId !== '3',
+        'tab-active': this.activeTab === 'longBreak',
+        'tab-not-active': this.activeTab !== 'longBreak',
         'tab-label': true
       }
+    }
+  },
+  methods: {
+    changeTab (tab, counter) {
+      this.$store.commit('changeTab', { tab: tab, counter: counter })
+      this.$store.commit('reset')
     }
   }
 }

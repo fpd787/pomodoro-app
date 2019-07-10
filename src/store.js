@@ -3,19 +3,26 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const maxCount = 1500
-
 const store = new Vuex.Store({
   state: {
     timer: null,
-    counter: maxCount,
-    isTimerOn: false
+    counter: 1500,
+    isTimerOn: false,
+    activeTab: 'pomodoro'
   },
   getters: {
     dateCounter: (state) => {
       const minutes = Math.floor(state.counter / 60)
       const seconds = state.counter % 60
       return `${('00' + minutes).slice(-2)}:${('00' + seconds).slice(-2)}`
+    },
+    activeTab: (state) => {
+      return state.activeTab
+    },
+    maxCount: (state) => {
+      return state.activeTab === 'pomodoro' ? 1500
+        : state.activeTab === 'shortBreak' ? 300
+        : 900
     }
   },
   mutations: {
@@ -30,7 +37,11 @@ const store = new Vuex.Store({
     reset (state) {
       state.isTimerOn = false
       clearInterval(state.timer)
-      state.counter = maxCount
+      state.counter = state.maxCount
+    },
+    changeTab (state, payload) {
+      state.activeTab = payload.tab
+      state.maxCount = payload.counter
     }
   }
 })

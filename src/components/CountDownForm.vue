@@ -42,9 +42,6 @@ ul {
 }
 .button-list > li {
   display: inline-block;
-  margin: 0 12px 0 0;
-  &:last-child {
-    margin: 0;
-  }
+  margin: 0 6px;
 }
 </style>
