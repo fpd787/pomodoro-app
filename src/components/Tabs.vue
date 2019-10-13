@@ -1,49 +1,50 @@
 <template>
   <div class="tabs">
-    <input type="radio" name="tabs" @change="changeTab('pomodoro', 1500)" value="pomodoro" id="pomodoroTab" class="tab-input">
-    <label for="pomodoroTab" :class="classPomodoro">Pomodoro</label>
-
-    <input type="radio" name="tabs" @change="changeTab('shortBreak', 300)" value="shortBreak" id="shortBreakTab" class="tab-input">
-    <label for="shortBreakTab" :class="classShortBreak">Short Break</label>
-
-    <input type="radio" name="tabs" @change="changeTab('longBreak', 900)" value="longBreak" id="longBreakTab" class="tab-input">
-    <label for="longBreakTab" :class="classLongBreak">Long Break</label>
-
+    <div v-for="tab in tabs" :key="tab.id" class="tab">
+      <input
+        type="radio"
+        name="tabs"
+        v-model="activeTab"
+        @change="changeTab"
+        :value="tab.value"
+        :id="tab.value"
+        class="tab-input"
+      >
+      <label :for="tab.value" :class="classActiveTab(tab.value)">{{ tab.value }}</label>
+    </div>
     <div class="bottom-line"></div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      tabs: [
+        { id: 1, value: 'Pomodoro', maxCount: 1500 },
+        { id: 2, value: 'ShortBreak', maxCount: 300 },
+        { id: 3, value: 'LongBreak', maxCount: 900 }
+      ],
+      activeTab: this.$store.getters.activeTab
+    }
+  },
   computed: {
-    activeTab() {
-      return this.$store.getters.activeTab
-    },
-    classPomodoro() {
-      return {
-        'tab-active': this.activeTab === 'pomodoro',
-        'tab-not-active': this.activeTab !== 'pomodoro',
-        'tab-label': true
-      }
-    },
-    classShortBreak() {
-      return {
-        'tab-active': this.activeTab === 'shortBreak',
-        'tab-not-active': this.activeTab !== 'shortBreak',
-        'tab-label': true
-      }
-    },
-    classLongBreak() {
-      return {
-        'tab-active': this.activeTab === 'longBreak',
-        'tab-not-active': this.activeTab !== 'longBreak',
-        'tab-label': true
-      }
+    maxCount() {
+      const selectedTab = this.tabs.find((e) => e.value === this.activeTab)
+      return selectedTab.maxCount
     }
   },
   methods: {
-    changeTab (tab, counter) {
-      this.$store.commit('changeTab', { tab: tab, counter: counter })
+    classActiveTab(tabName) {
+      return {
+        'tab-active': this.activeTab === tabName,
+        'tab-not-active': this.activeTab !== tabName,
+        'tab-label': true
+      }
+    },
+    changeTab () {
+      this.$store.commit('changeTab', { activeTab: this.activeTab })
+      this.$store.commit('setCount', { maxCount: this.maxCount })
       this.$store.commit('reset')
     }
   }
@@ -56,6 +57,9 @@ $sub-color: #eee;
 
 .tabs {
   overflow: hidden;
+}
+.tab {
+  display: inline-block;
 }
 .tab-input {
   display: none;

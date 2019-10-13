@@ -7,8 +7,9 @@ const store = new Vuex.Store({
   state: {
     timer: null,
     counter: 1500,
+    maxCount: 0,
     isTimerOn: false,
-    activeTab: 'pomodoro'
+    activeTab: 'Pomodoro'
   },
   getters: {
     dateCounter: (state) => {
@@ -18,11 +19,6 @@ const store = new Vuex.Store({
     },
     activeTab: (state) => {
       return state.activeTab
-    },
-    maxCount: (state) => {
-      return state.activeTab === 'pomodoro' ? 1500
-        : state.activeTab === 'shortBreak' ? 300
-        : 900
     }
   },
   mutations: {
@@ -40,8 +36,10 @@ const store = new Vuex.Store({
       state.counter = state.maxCount
     },
     changeTab (state, payload) {
-      state.activeTab = payload.tab
-      state.maxCount = payload.counter
+      state.activeTab = payload.activeTab
+    },
+    setCount (state, payload) {
+      state.maxCount = payload.maxCount
     }
   }
 })
